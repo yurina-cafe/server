@@ -7,7 +7,8 @@ type MDContent = string;
  * @todo get article content by file name
  */
 export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
-  return fileName + "all articles";
+  const article = fs.readFileSync(`data/${fileName}.md`);
+  return article;
 };
 
 /**
@@ -15,7 +16,8 @@ export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
  * @returns
  */
 export const fetchAllArticlesNames = () => {
-  return "all articles names";
+  const exitFiles: string[] = fs.readdirSync("data")
+  return exitFiles;
 };
 
 /**

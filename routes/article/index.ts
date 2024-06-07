@@ -1,7 +1,6 @@
 import { debug, debugArticle } from "../../utils/cli";
-import { getAllArticles } from "../../controller/articles";
 import express from "express";
-import { postArticle } from "../../utils/file";
+import { fetchAllArticlesNames, fetchArticleByFileNameFromDisk, postArticle } from "../../utils/file";
 
 export const useRouteArticle = (app: express.Application) => {
   /**
@@ -9,14 +8,15 @@ export const useRouteArticle = (app: express.Application) => {
    */
   app.get("/article/all", (req, res) => {
     debug(req.toString(), Math.floor(Math.random() * 3));
-    res.send(getAllArticles());
+    res.send(fetchAllArticlesNames());
   });
 
   /**
    * @description 获取单篇文章
    */
   app.get("/article/:id", (req, res) => {
-    res.send("get article");
+    debug(req.toString(), 2);
+    res.send(fetchArticleByFileNameFromDisk(req.params.id));
   });
 
   /**
