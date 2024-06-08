@@ -7,7 +7,7 @@ export const useRouteArticle = (app: express.Application) => {
    * @description 获取所有文章
    */
   app.get("/article/all", (req, res) => {
-    debug(req.toString(), 1);
+    debugArticle(req, "Get");
     res.send(fetchAllArticlesNames());
   });
 
