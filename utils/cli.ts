@@ -48,13 +48,19 @@ export const debug = (msg: string, pl?: PermissionLevel | number) => {
   console.log(color(msg));
 };
 
-export const debugArticle = (req: any) => {
+const methodToDebugPrefix: { [key: string]: string } = {
+  Post: debugPrefix.PostArticleSuccess,
+  Delete: debugPrefix.DeleteArticleSuccess,
+  Get: debugPrefix.GetArticleSuccess,
+}
+export const debugArticle = (req: any, method: string) => {
+  const methodPrefix = methodToDebugPrefix[method];
   debug(
     debugPrefix.Common.Prefix +
-      debugPrefix.Common.Spacing +
-      debugPrefix.PostArticleSuccess +
-      debugPrefix.Common.Spacing +
-      JSON.stringify(req?.body ?? "null"),
+    debugPrefix.Common.Spacing +
+    methodPrefix +
+    debugPrefix.Common.Spacing +
+    JSON.stringify(req?.body ?? "null"),
     1,
   );
 };

@@ -1,13 +1,13 @@
 import { debug, debugArticle } from "../../utils/cli";
 import express from "express";
-import { fetchAllArticlesNames, fetchArticleByFileNameFromDisk, postArticle } from "../../utils/file";
+import { fetchAllArticlesNames, fetchArticleByFileNameFromDisk, postArticle, deleteArticle } from "../../utils/file";
 
 export const useRouteArticle = (app: express.Application) => {
   /**
    * @description 获取所有文章
    */
   app.get("/article/all", (req, res) => {
-    debug(req.toString(), Math.floor(Math.random() * 3));
+    debugArticle(req, "Get");
     res.send(fetchAllArticlesNames());
   });
 
@@ -15,7 +15,7 @@ export const useRouteArticle = (app: express.Application) => {
    * @description 获取单篇文章
    */
   app.get("/article/:id", (req, res) => {
-    debug(req.toString(), 2);
+    debugArticle(req, "Get");
     res.send(fetchArticleByFileNameFromDisk(req.params.id));
   });
 
@@ -23,7 +23,7 @@ export const useRouteArticle = (app: express.Application) => {
    * @description 新增文章
    */
   app.post("/article", (req, res) => {
-    debugArticle(req);
+    debugArticle(req, "Post");
     const title = req.body.title + "." + "md";
     const content = req.body.content;
     const aStatusCode = postArticle(title, content);
@@ -39,6 +39,12 @@ export const useRouteArticle = (app: express.Application) => {
    * @description 删除文章
    */
   app.delete("/article/:id", (req, res) => {
-    res.send("delete article");
+    debugArticle(req, "Delete");
+    const aStatusCode = deleteArticle(req.params.id);
+    const Message = aStatusCode === 200 ? "success" : "failed";
+    res.send({
+      code: aStatusCode,
+      message: Message
+    });
   });
 };

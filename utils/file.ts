@@ -36,6 +36,13 @@ export const postArticle = (fileName: IPath, content: MDContent) => {
  * @temp-deprecated
  * @returns
  */
-export const deleteArticle = () => {
-  return "delete article";
+export const deleteArticle = (fileName: string) => {
+  if (!fs.existsSync(`data/${fileName}`)) {
+    return 404;
+  }
+  fs.unlinkSync(`data/${fileName}`);
+  if (fs.existsSync(`data/${fileName}`)) {
+    return 500;
+  }
+  return 200;
 };
