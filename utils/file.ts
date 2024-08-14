@@ -16,9 +16,7 @@ export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
  * @returns
  */
 export const fetchAllArticlesNames = () => {
-  const buffer: Buffer = fs.readFileSync("notes");
-  const articleString: string = buffer.toString();
-  const exitArticles: string[] = articleString.split('\n').map(note => note.trim()).filter(note => note);
+  const exitArticles: string[] = fs.readdirSync("data")
   return exitArticles;
 };
 
@@ -54,9 +52,7 @@ export const deleteArticle = (fileName: string) => {
  * @returns notenmae
  */
 export const fetchAllNotesNames = () => {
-  const buffer: Buffer = fs.readFileSync("notes");
-  const notesString: string = buffer.toString();
-  const exitNotes: string[] = notesString.split('\n').map(note => note.trim()).filter(note => note);
+  const exitNotes: string[] = fs.readdirSync("notes");
   return exitNotes;
 }
 

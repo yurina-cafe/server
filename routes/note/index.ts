@@ -2,11 +2,11 @@ import { debugArticle } from "../../utils/cli";
 import express from "express";
 import { fetchAllNotesNames, fetchNoteByFileNameFromDisk } from "../../utils/file";
 
-export const useRouteArticle = (app: express.Application) => {
+export const useRouteNote = (app: express.Application) => {
   /**
    * @description 获取所有文章
    */
-  app.get("/note/all", (req, res) => {
+  app.get("/notes/all", (req, res) => {
     debugArticle(req, "Get");
     res.send(fetchAllNotesNames());
   });
@@ -14,7 +14,7 @@ export const useRouteArticle = (app: express.Application) => {
   /**
    * @description 获取单篇文章
    */
-  app.get("/note/:id", (req, res) => {
+  app.get("/notes/:id", (req, res) => {
     debugArticle(req, "Get");
     res.send(fetchNoteByFileNameFromDisk(req.params.id));
   });
