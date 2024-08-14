@@ -16,8 +16,10 @@ export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
  * @returns
  */
 export const fetchAllArticlesNames = () => {
-  const exitFiles: string[] = fs.readdirSync("data")
-  return exitFiles;
+  const buffer: Buffer = fs.readFileSync("notes");
+  const articleString: string = buffer.toString();
+  const exitArticles: string[] = articleString.split('\n').map(note => note.trim()).filter(note => note);
+  return exitArticles;
 };
 
 /**
@@ -46,3 +48,23 @@ export const deleteArticle = (fileName: string) => {
   }
   return 200;
 };
+
+/**
+ * @todo get all note names
+ * @returns notenmae
+ */
+export const fetchAllNotesNames = () => {
+  const buffer: Buffer = fs.readFileSync("notes");
+  const notesString: string = buffer.toString();
+  const exitNotes: string[] = notesString.split('\n').map(note => note.trim()).filter(note => note);
+  return exitNotes;
+}
+
+/**
+ * @todo get note content by filename
+ */
+
+export const fetchNoteByFileNameFromDisk = (fileName: IPath) => {
+  const note = fs.readFileSync(`notes/${fileName}.md`)
+  return note;
+}
