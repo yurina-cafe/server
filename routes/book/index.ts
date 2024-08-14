@@ -1,10 +1,12 @@
 import express from 'express'
-import { debugArticle } from 'utils/cli';
-import { fetchBookCsvFromDisk } from 'utils/book';
+import { debugArticle } from '../../utils/cli';
+import { fetchBookCsvFromDisk } from '../../utils/book';
 
 export const useRouteBook = (app: express.Application) => {
-  app.get("/article/all", (req, res) => {
+  app.get("/books", (req, res) => {
     debugArticle(req, "Get");
-    res.send(fetchBookCsvFromDisk());
+    fetchBookCsvFromDisk().then(data => {
+      res.send(data);
+    })
   });
 }
