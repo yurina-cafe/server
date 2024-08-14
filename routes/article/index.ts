@@ -14,9 +14,9 @@ export const useRouteArticle = (app: express.Application) => {
   /**
    * @description 获取单篇文章
    */
-  app.get("/article/:id", (req, res) => {
+  app.get("/articles/:dirpath/:id", (req, res) => {
     debugArticle(req, "Get");
-    res.send(fetchArticleByFileNameFromDisk(req.params.id));
+    res.send(fetchArticleByFileNameFromDisk(req.params.dirpath, req.params.id));
   });
 
   /**

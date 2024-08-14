@@ -1,13 +1,14 @@
 import fs from "fs";
+import path from "path";
 
 type IPath = string;
 type MDContent = string;
-
+type IDirType = string;
 /**
  * @todo get article content by file name
  */
-export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
-  const article = fs.readFileSync(`data/${fileName}.md`);
+export const fetchArticleByFileNameFromDisk = (dirPath: IDirType, fileName: IPath) => {
+  const article = fs.readFileSync(`articles/${dirPath}/${fileName}.md`);
   return article;
 };
 
@@ -16,8 +17,23 @@ export const fetchArticleByFileNameFromDisk = (fileName: IPath) => {
  * @returns
  */
 export const fetchAllArticlesNames = () => {
-  const exitArticles: string[] = fs.readdirSync("data")
-  return exitArticles;
+  const readDirectory = (dirPath: string) => {
+    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+    const files: string[] = [];
+
+    for (const item of items) {
+      const fullPath = path.join(dirPath, item.name);
+      if (item.isDirectory()) {
+        // 递归调用
+        files.push(...readDirectory(fullPath));
+      } else {
+        files.push(item.name);
+      }
+    }
+
+    return files;
+  }
+  return readDirectory("articles");
 };
 
 /**
