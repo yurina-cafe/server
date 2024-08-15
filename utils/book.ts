@@ -22,7 +22,7 @@ export const fetchBookCsvFromDisk = (): Promise<any[]> => {
 
         const translatedData = {
           name: cleanData['书名'],
-          tag: cleanData['类型'],
+          type: cleanData['类型'],
           author: cleanData['作家'],
           date: cleanData['时间']
         };
